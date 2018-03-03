@@ -38,6 +38,7 @@ type RequestEnvelope struct {
 	Session *Session `json:"session"`
 	Request *Request `json:"request"`
 	// TODO Add Request Context
+    Context *Context `json:"context"`
 }
 
 // Session containes the session data from the Alexa request.
@@ -47,13 +48,17 @@ type Session struct {
 	Attributes struct {
 		String map[string]interface{} `json:"string"`
 	} `json:"attributes"`
-	User struct {
-		UserID      string `json:"userId"`
-		AccessToken string `json:"accessToken"`
-	} `json:"user"`
-	Application struct {
-		ApplicationID string `json:"applicationId"`
-	} `json:"application"`
+    User *User `json:"user"`
+    Application *Application `json:"application"`
+}
+
+type Application struct {
+    ApplicationID string `json:"applicationId"`
+}
+
+type User struct {
+    UserID      string `json:"userId"`
+    AccessToken string `json:"accessToken"`
 }
 
 // Request contines the data in the request within the main request.
@@ -65,6 +70,22 @@ type Request struct {
 	DialogState string `json:"dialogState"`
 	Intent      Intent `json:"intent"`
 	Name        string `json:"name"`
+}
+
+type Context struct {
+    System *System `json:"system"`
+}
+
+type System struct {
+    Device *Device `json:"device"`
+    Application *Application `json:"application"`
+    User *User `json:"user"`
+    APIEndpoint string `json:"apiEndpoint"`
+    APIAccessToken string `json:"apiAccessToken"`
+}
+
+type Device struct {
+    DeviceID string `json:"deviceId"`
 }
 
 // Intent contains the data about the Alexa Intent requested.
