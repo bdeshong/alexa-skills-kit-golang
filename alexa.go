@@ -218,7 +218,7 @@ func (alexa *Alexa) ProcessRequest(requestEnv *RequestEnvelope) (*ResponseEnvelo
 			return nil, err
 		}
 	case intentRequestName:
-		err := alexa.RequestHandler.OnIntent(request, session, response)
+		err := alexa.RequestHandler.OnIntent(request, session, response, context)
 		if err != nil {
 			log.Println("Error handling OnIntent.", err.Error())
 			return nil, err
