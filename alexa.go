@@ -17,10 +17,10 @@ var timestampTolerance = 150
 
 // Alexa defines the primary interface to use to create an Alexa request handler.
 type Alexa struct {
-	ApplicationID       string
-	RequestHandler      RequestHandler
+	ApplicationID		string
+	RequestHandler		RequestHandler
 	IgnoreApplicationID bool
-	IgnoreTimestamp     bool
+	IgnoreTimestamp		bool
 }
 
 // RequestHandler defines the interface that must be implemented to handle
@@ -28,94 +28,94 @@ type Alexa struct {
 type RequestHandler interface {
 	OnSessionStarted(*Request, *Session, *Response) error
 	OnLaunch(*Request, *Session, *Response) error
-	OnIntent(*Request, *Session, *Response) error
+	OnIntent(*Request, *Session, *Response, *Context) error
 	OnSessionEnded(*Request, *Session, *Response) error
 }
 
 // RequestEnvelope contains the data passed from Alexa to the request handler.
 type RequestEnvelope struct {
-	Version string   `json:"version"`
+	Version string	 `json:"version"`
 	Session *Session `json:"session"`
 	Request *Request `json:"request"`
 	// TODO Add Request Context
-    Context *Context `json:"context"`
+	Context *Context `json:"context"`
 }
 
 // Session containes the session data from the Alexa request.
 type Session struct {
-	New        bool   `json:"new"`
+	New		   bool   `json:"new"`
 	SessionID  string `json:"sessionId"`
 	Attributes struct {
 		String map[string]interface{} `json:"string"`
 	} `json:"attributes"`
-    User *User `json:"user"`
-    Application *Application `json:"application"`
+	User *User `json:"user"`
+	Application *Application `json:"application"`
 }
 
 type Application struct {
-    ApplicationID string `json:"applicationId"`
+	ApplicationID string `json:"applicationId"`
 }
 
 type User struct {
-    UserID      string `json:"userId"`
-    AccessToken string `json:"accessToken"`
+	UserID		string `json:"userId"`
+	AccessToken string `json:"accessToken"`
 }
 
 // Request contines the data in the request within the main request.
 type Request struct {
-	Locale      string `json:"locale"`
-	Timestamp   string `json:"timestamp"`
-	Type        string `json:"type"`
-	RequestID   string `json:"requestId"`
+	Locale		string `json:"locale"`
+	Timestamp	string `json:"timestamp"`
+	Type		string `json:"type"`
+	RequestID	string `json:"requestId"`
 	DialogState string `json:"dialogState"`
-	Intent      Intent `json:"intent"`
-	Name        string `json:"name"`
+	Intent		Intent `json:"intent"`
+	Name		string `json:"name"`
 }
 
 type Context struct {
-    System *System `json:"system"`
+	System *System `json:"system"`
 }
 
 type System struct {
-    Device *Device `json:"device"`
-    Application *Application `json:"application"`
-    User *User `json:"user"`
-    APIEndpoint string `json:"apiEndpoint"`
-    APIAccessToken string `json:"apiAccessToken"`
+	Device *Device `json:"device"`
+	Application *Application `json:"application"`
+	User *User `json:"user"`
+	APIEndpoint string `json:"apiEndpoint"`
+	APIAccessToken string `json:"apiAccessToken"`
 }
 
 type Device struct {
-    DeviceID string `json:"deviceId"`
+	DeviceID string `json:"deviceId"`
 }
 
 // Intent contains the data about the Alexa Intent requested.
 type Intent struct {
-	Name               string                `json:"name"`
-	ConfirmationStatus string                `json:"confirmationStatus,omitempty"`
-	Slots              map[string]IntentSlot `json:"slots"`
+	Name			   string				 `json:"name"`
+	ConfirmationStatus string				 `json:"confirmationStatus,omitempty"`
+	Slots			   map[string]IntentSlot `json:"slots"`
 }
 
 // IntentSlot contains the data for one Slot
 type IntentSlot struct {
-	Name               string `json:"name"`
+	Name			   string `json:"name"`
 	ConfirmationStatus string `json:"confirmationStatus,omitempty"`
-	Value              string `json:"value"`
+	Value			   string `json:"value"`
 }
 
 // ResponseEnvelope contains the Response and additional attributes.
 type ResponseEnvelope struct {
-	Version           string                 `json:"version"`
+	Version			  string				 `json:"version"`
 	SessionAttributes map[string]interface{} `json:"sessionAttributes,omitempty"`
-	Response          *Response              `json:"response"`
+	Response		  *Response				 `json:"response"`
 }
 
 // Response contains the body of the response.
 type Response struct {
-	OutputSpeech     *OutputSpeech `json:"outputSpeech,omitempty"`
-	Card             *Card         `json:"card,omitempty"`
-	Reprompt         *Reprompt     `json:"reprompt,omitempty"`
-	Directives       []interface{} `json:"directives,omitempty"`
-	ShouldSessionEnd bool          `json:"shouldEndSession"`
+	OutputSpeech	 *OutputSpeech `json:"outputSpeech,omitempty"`
+	Card			 *Card		   `json:"card,omitempty"`
+	Reprompt		 *Reprompt	   `json:"reprompt,omitempty"`
+	Directives		 []interface{} `json:"directives,omitempty"`
+	ShouldSessionEnd bool		   `json:"shouldEndSession"`
 }
 
 // OutputSpeech contains the data the defines what Alexa should say to the user.
@@ -127,11 +127,11 @@ type OutputSpeech struct {
 
 // Card contains the data displayed to the user by the Alexa app.
 type Card struct {
-	Type    string `json:"type"`
-	Title   string `json:"title,omitempty"`
+	Type	string `json:"type"`
+	Title	string `json:"title,omitempty"`
 	Content string `json:"content,omitempty"`
-	Text    string `json:"text,omitempty"`
-	Image   *Image `json:"image,omitempty"`
+	Text	string `json:"text,omitempty"`
+	Image	*Image `json:"image,omitempty"`
 }
 
 // Image provides URL(s) to the image to display in resposne to the request.
@@ -147,9 +147,9 @@ type Reprompt struct {
 
 // AudioPlayerDirective contains device level instructions on how to handle the response.
 type AudioPlayerDirective struct {
-	Type         string     `json:"type"`
-	PlayBehavior string     `json:"playBehavior,omitempty"`
-	AudioItem    *AudioItem `json:"audioItem,omitempty"`
+	Type		 string		`json:"type"`
+	PlayBehavior string		`json:"playBehavior,omitempty"`
+	AudioItem	 *AudioItem `json:"audioItem,omitempty"`
 }
 
 // AudioItem contains an audio Stream definition for playback.
@@ -159,14 +159,14 @@ type AudioItem struct {
 
 // Stream contains instructions on playing an audio stream.
 type Stream struct {
-	Token                string `json:"token"`
-	URL                  string `json:"url"`
-	OffsetInMilliseconds int    `json:"offsetInMilliseconds"`
+	Token				 string `json:"token"`
+	URL					 string `json:"url"`
+	OffsetInMilliseconds int	`json:"offsetInMilliseconds"`
 }
 
 // DialogDirective contains directives for use in Dialog prompts.
 type DialogDirective struct {
-	Type          string  `json:"type"`
+	Type		  string  `json:"type"`
 	SlotToElicit  string  `json:"slotToElicit,omitempty"`
 	SlotToConfirm string  `json:"slotToConfirm,omitempty"`
 	UpdatedIntent *Intent `json:"updatedIntent,omitempty"`
@@ -192,6 +192,7 @@ func (alexa *Alexa) ProcessRequest(requestEnv *RequestEnvelope) (*ResponseEnvelo
 
 	request := requestEnv.Request
 	session := requestEnv.Session
+	context := requestEnv.Context
 
 	responseEnv := &ResponseEnvelope{}
 	responseEnv.Version = sdkVersion
@@ -234,7 +235,7 @@ func (alexa *Alexa) ProcessRequest(requestEnv *RequestEnvelope) (*ResponseEnvelo
 }
 
 // SetTimestampTolerance sets the maximum number of seconds to allow between
-// the current time and the request Timestamp.  Default value is 150 seconds.
+// the current time and the request Timestamp.	Default value is 150 seconds.
 func (alexa *Alexa) SetTimestampTolerance(seconds int) {
 	timestampTolerance = seconds
 }
@@ -284,12 +285,12 @@ func (r *Response) SetRepromptSSML(ssml string) {
 // AddAudioPlayer adds an AudioPlayer directive to the Response.
 func (r *Response) AddAudioPlayer(playerType, playBehavior, streamToken, url string, offsetInMilliseconds int) {
 	d := AudioPlayerDirective{
-		Type:         playerType,
+		Type:		  playerType,
 		PlayBehavior: playBehavior,
 		AudioItem: &AudioItem{
 			Stream: Stream{
-				Token:                streamToken,
-				URL:                  url,
+				Token:				  streamToken,
+				URL:				  url,
 				OffsetInMilliseconds: offsetInMilliseconds,
 			},
 		},
@@ -300,7 +301,7 @@ func (r *Response) AddAudioPlayer(playerType, playBehavior, streamToken, url str
 // AddDialogDirective adds a Dialog directive to the Response.
 func (r *Response) AddDialogDirective(dialogType, slotToElicit, slotToConfirm string, intent *Intent) {
 	d := DialogDirective{
-		Type:          dialogType,
+		Type:		   dialogType,
 		SlotToElicit:  slotToElicit,
 		SlotToConfirm: slotToConfirm,
 		UpdatedIntent: intent,
